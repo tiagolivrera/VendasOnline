@@ -2,12 +2,28 @@ package br.com.tiagolivrera.VendasOnline.domain;
 
 import java.math.BigDecimal;
 
-public class Produto {
+import br.com.tiagolivrera.VendasOnline.annotations.ColunaTabela;
+import br.com.tiagolivrera.VendasOnline.annotations.Tabela;
+import br.com.tiagolivrera.VendasOnline.annotations.TipoChave;
+import br.com.tiagolivrera.VendasOnline.dao.Persistente;
 
+@Tabela("TB_PRODUTO")
+public class Produto implements Persistente {
+
+	@ColunaTabela(dbName = "id", setJavaName = "setId")
 	private Long id;
+
+	@TipoChave("getCodigo")
+	@ColunaTabela(dbName = "codigo", setJavaName = "setCodigo")
 	private String codigo;
+
+	@ColunaTabela(dbName = "nome", setJavaName = "setNome")
 	private String nome;
+
+	@ColunaTabela(dbName = "descricao", setJavaName = "setDescricao")
 	private String descricao;
+
+	@ColunaTabela(dbName = "valor", setJavaName = "setValor")
 	private BigDecimal valor;
 
 	public Long getId() {

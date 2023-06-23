@@ -1,14 +1,36 @@
 package br.com.tiagolivrera.VendasOnline.domain;
 
-public class Cliente {
+import br.com.tiagolivrera.VendasOnline.annotations.ColunaTabela;
+import br.com.tiagolivrera.VendasOnline.annotations.Tabela;
+import br.com.tiagolivrera.VendasOnline.annotations.TipoChave;
+import br.com.tiagolivrera.VendasOnline.dao.Persistente;
 
+@Tabela("TB_CLIENTE")
+public class Cliente implements Persistente {
+
+	@ColunaTabela(dbName = "id", setJavaName = "setId")
 	private Long id;
+
+	@ColunaTabela(dbName = "nome", setJavaName = "setNome")
 	private String nome;
+
+	@TipoChave("getCpf")
+	@ColunaTabela(dbName = "cpf", setJavaName = "setCpf")
 	private Long cpf;
+
+	@ColunaTabela(dbName = "telefone", setJavaName = "setTelefone")
 	private Long telefone;
+
+	@ColunaTabela(dbName = "endereco", setJavaName = "setEndereco")
 	private String endereco;
+
+	@ColunaTabela(dbName = "numero", setJavaName = "setNumero")
 	private Integer numero;
+
+	@ColunaTabela(dbName = "cidade", setJavaName = "setCidade")
 	private String cidade;
+
+	@ColunaTabela(dbName = "estado", setJavaName = "setEstado")
 	private String estado;
 
 	public Long getId() {

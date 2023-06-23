@@ -5,16 +5,33 @@ import java.time.Instant;
 import java.util.Optional;
 import java.util.Set;
 
+import br.com.tiagolivrera.VendasOnline.annotations.ColunaTabela;
+import br.com.tiagolivrera.VendasOnline.annotations.Tabela;
+import br.com.tiagolivrera.VendasOnline.annotations.TipoChave;
 import br.com.tiagolivrera.VendasOnline.domain.enuns.Status;
 
+@Tabela("TB_VENDA")
 public class Venda {
 
+	@ColunaTabela(dbName = "id", setJavaName = "setId")
 	private Long id;
+
+	@TipoChave("getCodigo")
+	@ColunaTabela(dbName = "codigo", setJavaName = "setCodigo")
 	private String codigo;
+
+	@ColunaTabela(dbName = "id_cliente_fk", setJavaName = "setIdClienteFk")
 	private Cliente cliente;
+
 	private Set<ProdutoQuantidade> produtos;
+
+	@ColunaTabela(dbName = "valor_total", setJavaName = "setValorTotal")
 	private BigDecimal valorTotal;
+
+	@ColunaTabela(dbName = "data_venda", setJavaName = "setDataVenda")
 	private Instant dataVenda;
+
+	@ColunaTabela(dbName = "status_venda", setJavaName = "setStatus")
 	private Integer status;
 
 	public Long getId() {

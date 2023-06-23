@@ -2,11 +2,21 @@ package br.com.tiagolivrera.VendasOnline.domain;
 
 import java.math.BigDecimal;
 
+import br.com.tiagolivrera.VendasOnline.annotations.ColunaTabela;
+import br.com.tiagolivrera.VendasOnline.annotations.Tabela;
+
+@Tabela("TB_PRODUTO_QUANTIDADE")
 public class ProdutoQuantidade {
 
+	@ColunaTabela(dbName = "id", setJavaName = "setId")
 	private Long id;
+
 	private Produto produto;
+
+	@ColunaTabela(dbName = "quantidade", setJavaName = "setQuantidade")
 	private Integer quantidade;
+
+	@ColunaTabela(dbName = "valor_total", setJavaName = "setValorTotal")
 	private BigDecimal valorTotal;
 
 	public ProdutoQuantidade() {
