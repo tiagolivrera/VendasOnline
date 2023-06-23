@@ -8,10 +8,11 @@ import java.util.Set;
 import br.com.tiagolivrera.VendasOnline.annotations.ColunaTabela;
 import br.com.tiagolivrera.VendasOnline.annotations.Tabela;
 import br.com.tiagolivrera.VendasOnline.annotations.TipoChave;
+import br.com.tiagolivrera.VendasOnline.dao.Persistente;
 import br.com.tiagolivrera.VendasOnline.domain.enuns.Status;
 
 @Tabela("TB_VENDA")
-public class Venda {
+public class Venda implements Persistente {
 
 	@ColunaTabela(dbName = "id", setJavaName = "setId")
 	private Long id;

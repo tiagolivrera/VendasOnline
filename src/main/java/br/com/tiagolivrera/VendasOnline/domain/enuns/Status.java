@@ -2,7 +2,7 @@ package br.com.tiagolivrera.VendasOnline.domain.enuns;
 
 public enum Status {
 
-	INICIADA(1, "Iniciada"), CONCLUIDA(2, "Concluída"), CANCELADA(3, "Cancelada");
+	INICIADA(1, "INICIADA"), CONCLUIDA(2, "CONCLUIDA"), CANCELADA(3, "CANCELADA");
 
 	private int codigo;
 	private String descricao;
@@ -31,6 +31,15 @@ public enum Status {
 			}
 		}
 		throw new IllegalArgumentException("Id inválido: " + codigo);
+	}
+
+	public static Status getByName(String value) {
+		for (Status status : Status.values()) {
+			if (status.name().equals(value)) {
+				return status;
+			}
+		}
+		return null;
 	}
 
 }
