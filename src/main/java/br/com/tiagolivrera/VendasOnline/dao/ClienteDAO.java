@@ -20,12 +20,13 @@ public class ClienteDAO extends GenericDAO<Cliente, Long> implements IClienteDAO
 	@Override
 	public void atualiarDados(Cliente entity, Cliente entityCadastrado) {
 		entityCadastrado.setCidade(entity.getCidade());
-		entityCadastrado.setCpf(entity.getCpf());
+		entityCadastrado.setCpfOuCnpj(entity.getCpfOuCnpj());
 		entityCadastrado.setEndereco(entity.getEndereco());
 		entityCadastrado.setEstado(entity.getEstado());
 		entityCadastrado.setNome(entity.getNome());
 		entityCadastrado.setNumero(entity.getNumero());
 		entityCadastrado.setTelefone(entity.getTelefone());
+		entityCadastrado.setTipoPessoa(entity.getTipoPessoa());
 
 	}
 
@@ -33,26 +34,27 @@ public class ClienteDAO extends GenericDAO<Cliente, Long> implements IClienteDAO
 	protected String getQueryInsercao() {
 		StringBuilder sb = new StringBuilder();
 		sb.append("INSERT INTO TB_CLIENTE ");
-		sb.append("(ID, NOME, CPF, TEL, ENDERECO, NUMERO, CIDADE, ESTADO)");
-		sb.append("VALUES (nextval('sq_cliente'),?,?,?,?,?,?,?)");
+		sb.append("(ID, NOME, CPFOUCNPJ, TELEFONE, ENDERECO, NUMERO, CIDADE, ESTADO, TIPOPESSOA)");
+		sb.append("VALUES (nextval('sq_cliente'),?,?,?,?,?,?,?,?)");
 		return sb.toString();
 	}
 
 	@Override
 	protected void setParametrosQueryInsercao(PreparedStatement stmInsert, Cliente entity) throws SQLException {
 		stmInsert.setString(1, entity.getNome());
-		stmInsert.setLong(2, entity.getCpf());
+		stmInsert.setLong(2, entity.getCpfOuCnpj());
 		stmInsert.setLong(3, entity.getTelefone());
 		stmInsert.setString(4, entity.getEndereco());
 		stmInsert.setLong(5, entity.getNumero());
 		stmInsert.setString(6, entity.getCidade());
 		stmInsert.setString(7, entity.getEstado());
+		stmInsert.setInt(8, entity.getTipoPessoa().getCodigo());
 
 	}
 
 	@Override
 	protected String getQueryExclusao() {
-		return "DELETE FROM TB_CLIENTE WHERE CPF = ?";
+		return "DELETE FROM TB_CLIENTE WHERE CPFOUCNPJ = ?";
 	}
 
 	@Override
@@ -65,12 +67,13 @@ public class ClienteDAO extends GenericDAO<Cliente, Long> implements IClienteDAO
 		StringBuilder sb = new StringBuilder();
 		sb.append("UPDATE TB_CLIENTE ");
 		sb.append("SET NOME = ?,");
-		sb.append("TEL = ?,");
+		sb.append("TELEFONE = ?,");
 		sb.append("ENDERECO = ?,");
 		sb.append("NUMERO = ?,");
 		sb.append("CIDADE = ?,");
 		sb.append("ESTADO = ?");
-		sb.append(" WHERE CPF = ?");
+		sb.append("TIPOPESSOA = ?");
+		sb.append(" WHERE CPFOUCNPJ = ?");
 		return sb.toString();
 	}
 
@@ -82,7 +85,8 @@ public class ClienteDAO extends GenericDAO<Cliente, Long> implements IClienteDAO
 		stmUpdate.setLong(4, entity.getNumero());
 		stmUpdate.setString(5, entity.getCidade());
 		stmUpdate.setString(6, entity.getEstado());
-		stmUpdate.setLong(7, entity.getCpf());
+		stmUpdate.setLong(7, entity.getCpfOuCnpj());
+		stmUpdate.setInt(8, entity.getTipoPessoa().getCodigo());
 	}
 
 	@Override

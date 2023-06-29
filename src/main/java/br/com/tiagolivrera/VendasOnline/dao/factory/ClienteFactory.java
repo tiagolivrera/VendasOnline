@@ -11,7 +11,7 @@ public class ClienteFactory {
 		Cliente cliente = new Cliente();
 		cliente.setId(rs.getLong("ID_CLIENTE"));
 		cliente.setNome(rs.getString(("NOME")));
-		cliente.setCpf(rs.getLong(("CPF")));
+		cliente.setCpfOuCnpj(rs.getLong(("CPFOUCNPJ")));
 		cliente.setTelefone(rs.getLong(("TELEFONE")));
 		cliente.setEndereco(rs.getString(("ENDERECO")));
 		cliente.setNumero(rs.getInt(("NUMERO")));

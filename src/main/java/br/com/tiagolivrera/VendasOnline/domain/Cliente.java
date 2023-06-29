@@ -4,6 +4,7 @@ import br.com.tiagolivrera.VendasOnline.annotations.ColunaTabela;
 import br.com.tiagolivrera.VendasOnline.annotations.Tabela;
 import br.com.tiagolivrera.VendasOnline.annotations.TipoChave;
 import br.com.tiagolivrera.VendasOnline.dao.Persistente;
+import br.com.tiagolivrera.VendasOnline.domain.enuns.TipoPessoa;
 
 @Tabela("TB_CLIENTE")
 public class Cliente implements Persistente {
@@ -14,9 +15,9 @@ public class Cliente implements Persistente {
 	@ColunaTabela(dbName = "nome", setJavaName = "setNome")
 	private String nome;
 
-	@TipoChave("getCpf")
-	@ColunaTabela(dbName = "cpf", setJavaName = "setCpf")
-	private Long cpf;
+	@TipoChave("getCpfOuCnpj")
+	@ColunaTabela(dbName = "cpfoucnpj", setJavaName = "setCpfOuCnpj")
+	private Long cpfOuCnpj;
 
 	@ColunaTabela(dbName = "telefone", setJavaName = "setTelefone")
 	private Long telefone;
@@ -32,6 +33,9 @@ public class Cliente implements Persistente {
 
 	@ColunaTabela(dbName = "estado", setJavaName = "setEstado")
 	private String estado;
+
+	@ColunaTabela(dbName = "tipopessoa", setJavaName = "setTipoPessoa")
+	private Integer tipoPessoa;
 
 	public Long getId() {
 		return id;
@@ -49,12 +53,12 @@ public class Cliente implements Persistente {
 		this.nome = nome;
 	}
 
-	public Long getCpf() {
-		return cpf;
+	public Long getCpfOuCnpj() {
+		return cpfOuCnpj;
 	}
 
-	public void setCpf(Long cpf) {
-		this.cpf = cpf;
+	public void setCpfOuCnpj(Long cpfOuCnpj) {
+		this.cpfOuCnpj = cpfOuCnpj;
 	}
 
 	public Long getTelefone() {
@@ -95,6 +99,14 @@ public class Cliente implements Persistente {
 
 	public void setEstado(String estado) {
 		this.estado = estado;
+	}
+
+	public TipoPessoa getTipoPessoa() {
+		return TipoPessoa.toEnum(this.tipoPessoa);
+	}
+
+	public void setTipoPessoa(TipoPessoa tipoPessoa) {
+		this.tipoPessoa = tipoPessoa.getCodigo();
 	}
 
 }

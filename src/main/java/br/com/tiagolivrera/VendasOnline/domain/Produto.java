@@ -26,6 +26,9 @@ public class Produto implements Persistente {
 	@ColunaTabela(dbName = "valor", setJavaName = "setValor")
 	private BigDecimal valor;
 
+	@ColunaTabela(dbName = "imgurl", setJavaName = "setImgUrl")
+	private String imgUrl;
+
 	public Long getId() {
 		return id;
 	}
@@ -64,6 +67,14 @@ public class Produto implements Persistente {
 
 	public void setValor(BigDecimal valor) {
 		this.valor = valor;
+	}
+
+	public String getImgUrl() {
+		return imgUrl;
+	}
+
+	public void setImgUrl(String imgUrl) {
+		this.imgUrl = imgUrl;
 	}
 
 }

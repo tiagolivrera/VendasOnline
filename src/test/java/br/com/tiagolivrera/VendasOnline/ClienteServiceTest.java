@@ -7,6 +7,7 @@ import org.junit.Test;
 import br.com.tiagolivrera.VendasOnline.dao.ClienteDAOMock;
 import br.com.tiagolivrera.VendasOnline.dao.IClienteDAO;
 import br.com.tiagolivrera.VendasOnline.domain.Cliente;
+import br.com.tiagolivrera.VendasOnline.domain.enuns.TipoPessoa;
 import br.com.tiagolivrera.VendasOnline.exceptions.DAOException;
 import br.com.tiagolivrera.VendasOnline.exceptions.TipoChaveNaoEncontradaException;
 import br.com.tiagolivrera.VendasOnline.services.ClienteService;
@@ -26,19 +27,20 @@ public class ClienteServiceTest {
 	@Before
 	public void init() {
 		cliente = new Cliente();
-		cliente.setCpf(12312312312L);
+		cliente.setCpfOuCnpj(12312312312L);
 		cliente.setNome("Rodrigo");
 		cliente.setCidade("São Paulo");
 		cliente.setEndereco("End");
 		cliente.setEstado("SP");
 		cliente.setNumero(10);
 		cliente.setTelefone(1199999999L);
+		cliente.setTipoPessoa(TipoPessoa.FISICA);
 
 	}
 
 	@Test
 	public void pesquisarCliente() throws DAOException {
-		Cliente clienteConsultado = clienteService.buscarPorCPF(cliente.getCpf());
+		Cliente clienteConsultado = clienteService.buscarPorCPF(cliente.getCpfOuCnpj());
 		Assert.assertNotNull(clienteConsultado);
 	}
 
@@ -51,7 +53,7 @@ public class ClienteServiceTest {
 
 	@Test
 	public void excluirCliente() throws DAOException {
-		clienteService.excluir(cliente.getCpf());
+		clienteService.excluir(cliente.getCpfOuCnpj());
 	}
 
 	@Test

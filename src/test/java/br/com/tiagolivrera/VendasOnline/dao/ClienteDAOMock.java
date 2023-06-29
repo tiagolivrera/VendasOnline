@@ -28,7 +28,7 @@ public class ClienteDAOMock implements IClienteDAO {
 	@Override
 	public Cliente consultar(Long valor) {
 		Cliente cliente = new Cliente();
-		cliente.setCpf(valor);
+		cliente.setCpfOuCnpj(valor);
 		return cliente;
 	}
 

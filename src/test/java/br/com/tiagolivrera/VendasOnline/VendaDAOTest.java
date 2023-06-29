@@ -29,6 +29,7 @@ import br.com.tiagolivrera.VendasOnline.domain.Cliente;
 import br.com.tiagolivrera.VendasOnline.domain.Produto;
 import br.com.tiagolivrera.VendasOnline.domain.Venda;
 import br.com.tiagolivrera.VendasOnline.domain.enuns.Status;
+import br.com.tiagolivrera.VendasOnline.domain.enuns.TipoPessoa;
 import br.com.tiagolivrera.VendasOnline.exceptions.DAOException;
 import br.com.tiagolivrera.VendasOnline.exceptions.MaisDeUmRegistroException;
 import br.com.tiagolivrera.VendasOnline.exceptions.TableException;
@@ -62,7 +63,7 @@ public class VendaDAOTest {
 	public void end() throws DAOException {
 		excluirVendas();
 		excluirProdutos();
-		clienteDao.excluir(this.cliente.getCpf());
+		clienteDao.excluir(this.cliente.getCpfOuCnpj());
 	}
 
 	private void excluirProdutos() throws DAOException {
@@ -297,13 +298,14 @@ public class VendaDAOTest {
 
 	private Cliente cadastrarCliente() throws TipoChaveNaoEncontradaException, DAOException {
 		Cliente cliente = new Cliente();
-		cliente.setCpf(12312312312L);
+		cliente.setCpfOuCnpj(12312312312L);
 		cliente.setNome("Rodrigo");
 		cliente.setCidade("São Paulo");
 		cliente.setEndereco("End");
 		cliente.setEstado("SP");
 		cliente.setNumero(10);
 		cliente.setTelefone(1199999999L);
+		cliente.setTipoPessoa(TipoPessoa.FISICA);
 		clienteDao.cadastrar(cliente);
 		return cliente;
 	}
