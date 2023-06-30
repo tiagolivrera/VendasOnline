@@ -10,6 +10,7 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import br.com.tiagolivrera.VendasOnline.dao.jpa.ClienteJpaDAO;
+import br.com.tiagolivrera.VendasOnline.dao.jpa.ClienteJpaDB2DAO;
 import br.com.tiagolivrera.VendasOnline.dao.jpa.IClienteJpaDAO;
 import br.com.tiagolivrera.VendasOnline.domain.enuns.TipoPessoa;
 import br.com.tiagolivrera.VendasOnline.domain.jpa.ClienteJPA;
@@ -18,23 +19,44 @@ import br.com.tiagolivrera.VendasOnline.exceptions.MaisDeUmRegistroException;
 import br.com.tiagolivrera.VendasOnline.exceptions.TableException;
 import br.com.tiagolivrera.VendasOnline.exceptions.TipoChaveNaoEncontradaException;
 
-public class ClienteJpaDAOTest {
+public class ClienteJpaDao2BancosTest {
 
 	private IClienteJpaDAO<ClienteJPA> clienteDao;
 
+	private IClienteJpaDAO<ClienteJPA> clienteDB2Dao;
+
 	private Random rd;
 
-	public ClienteJpaDAOTest() {
+	public ClienteJpaDao2BancosTest() {
 		this.clienteDao = new ClienteJpaDAO();
+		this.clienteDB2Dao = new ClienteJpaDB2DAO();
 		rd = new Random();
 	}
 
 	@After
 	public void end() throws DAOException {
-		Collection<ClienteJPA> list = clienteDao.buscarTodos();
+		Collection<ClienteJPA> list1 = clienteDao.buscarTodos();
+		excluir1(list1);
+
+		Collection<ClienteJPA> list2 = clienteDB2Dao.buscarTodos();
+		excluir2(list2);
+	}
+
+	private void excluir1(Collection<ClienteJPA> list) {
 		list.forEach(cli -> {
 			try {
 				clienteDao.excluir(cli);
+			} catch (DAOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		});
+	}
+
+	private void excluir2(Collection<ClienteJPA> list) {
+		list.forEach(cli -> {
+			try {
+				clienteDB2Dao.excluir(cli);
 			} catch (DAOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -50,6 +72,12 @@ public class ClienteJpaDAOTest {
 
 		ClienteJPA clienteConsultado = clienteDao.consultar(cliente.getId());
 		Assert.assertNotNull(clienteConsultado);
+
+		cliente.setId(null);
+		clienteDB2Dao.cadastrar(cliente);
+
+		ClienteJPA clienteConsultado2 = clienteDB2Dao.consultar(cliente.getId());
+		Assert.assertNotNull(clienteConsultado2);
 
 	}
 

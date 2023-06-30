@@ -10,31 +10,61 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import br.com.tiagolivrera.VendasOnline.dao.jpa.ClienteJpaDAO;
+import br.com.tiagolivrera.VendasOnline.dao.jpa.ClienteJpaDB2DAO;
+import br.com.tiagolivrera.VendasOnline.dao.jpa.ClienteJpaDB3DAO;
 import br.com.tiagolivrera.VendasOnline.dao.jpa.IClienteJpaDAO;
 import br.com.tiagolivrera.VendasOnline.domain.enuns.TipoPessoa;
 import br.com.tiagolivrera.VendasOnline.domain.jpa.ClienteJPA;
+import br.com.tiagolivrera.VendasOnline.domain.jpa.ClienteJpa2;
 import br.com.tiagolivrera.VendasOnline.exceptions.DAOException;
 import br.com.tiagolivrera.VendasOnline.exceptions.MaisDeUmRegistroException;
 import br.com.tiagolivrera.VendasOnline.exceptions.TableException;
 import br.com.tiagolivrera.VendasOnline.exceptions.TipoChaveNaoEncontradaException;
 
-public class ClienteJpaDAOTest {
+public class ClienteJpaDao3BancosTest {
 
 	private IClienteJpaDAO<ClienteJPA> clienteDao;
 
+	private IClienteJpaDAO<ClienteJPA> clienteDB2Dao;
+
+	private IClienteJpaDAO<ClienteJpa2> clienteDB3Dao;
+
 	private Random rd;
 
-	public ClienteJpaDAOTest() {
+	public ClienteJpaDao3BancosTest() {
 		this.clienteDao = new ClienteJpaDAO();
+		this.clienteDB2Dao = new ClienteJpaDB2DAO();
+		this.clienteDB3Dao = new ClienteJpaDB3DAO();
 		rd = new Random();
 	}
 
 	@After
 	public void end() throws DAOException {
 		Collection<ClienteJPA> list = clienteDao.buscarTodos();
+		excluir(list, clienteDao);
+
+		Collection<ClienteJPA> list2 = clienteDB2Dao.buscarTodos();
+		excluir(list2, clienteDB2Dao);
+
+		Collection<ClienteJpa2> list3 = clienteDB3Dao.buscarTodos();
+		excluir3(list3);
+	}
+
+	private void excluir(Collection<ClienteJPA> list, IClienteJpaDAO<ClienteJPA> clienteDao) {
 		list.forEach(cli -> {
 			try {
 				clienteDao.excluir(cli);
+			} catch (DAOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		});
+	}
+
+	private void excluir3(Collection<ClienteJpa2> list) {
+		list.forEach(cli -> {
+			try {
+				clienteDB3Dao.excluir(cli);
 			} catch (DAOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -50,6 +80,18 @@ public class ClienteJpaDAOTest {
 
 		ClienteJPA clienteConsultado = clienteDao.consultar(cliente.getId());
 		Assert.assertNotNull(clienteConsultado);
+
+		cliente.setId(null);
+		clienteDB2Dao.cadastrar(cliente);
+
+		ClienteJPA clienteConsultado2 = clienteDB2Dao.consultar(cliente.getId());
+		Assert.assertNotNull(clienteConsultado2);
+
+		ClienteJpa2 cliente2 = criarCliente2();
+		clienteDB3Dao.cadastrar(cliente2);
+
+		ClienteJpa2 clienteConsultado3 = clienteDB3Dao.consultar(cliente2.getId());
+		Assert.assertNotNull(clienteConsultado3);
 
 	}
 
@@ -144,6 +186,18 @@ public class ClienteJpaDAOTest {
 		cliente.setNumero(10);
 		cliente.setTelefone(1199999999L);
 		cliente.setTipoPessoa(TipoPessoa.FISICA);
+		return cliente;
+	}
+
+	private ClienteJpa2 criarCliente2() {
+		ClienteJpa2 cliente = new ClienteJpa2();
+		cliente.setCpf(rd.nextLong());
+		cliente.setNome("Rodrigo");
+		cliente.setCidade("São Paulo");
+		cliente.setEnd("End");
+		cliente.setEstado("SP");
+		cliente.setNumero(10);
+		cliente.setTel(1199999999L);
 		return cliente;
 	}
 
